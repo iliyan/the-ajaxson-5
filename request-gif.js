@@ -37,13 +37,14 @@ function fetchAndDisplayGif(event) {
             // jQuery passes us the `response` variable, a regular javascript object created from the JSON the server gave us
             console.log("we received a response!");
             console.log(response);
-            var imageResp = response.image_url
-            $('#gif').attr('src','imageResp');
-
 
             // TODO
             // 1. set the source attribute of our image to the image_url of the GIF
+            var imageResp = response.data.image_url;
+            $('#gif').attr('src', imageResp);
+
             // 2. hide the feedback message and display the image
+            setGifLoadedStatus(true);
         },
         error: function() {
             // if something went wrong, the code in here will execute instead of the success function
@@ -53,9 +54,6 @@ function fetchAndDisplayGif(event) {
             setGifLoadedStatus(false);
         }
     });
-    $('body').append("Loading...");
-
-
 
     // TODO
     // give the user a "Loading..." message while they wait
@@ -71,4 +69,5 @@ function fetchAndDisplayGif(event) {
 function setGifLoadedStatus(isCurrentlyLoaded) {
     $("#gif").attr("hidden", !isCurrentlyLoaded);
     $("#feedback").attr("hidden", isCurrentlyLoaded);
+    $("#loading").attr("hidden", isCurrentlyLoaded);
 }
